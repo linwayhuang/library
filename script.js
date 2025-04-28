@@ -38,6 +38,36 @@ function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(book);
 }
 
-// function displayBookInTable {
-//   myLibrary.forEach
-// }
+function displayBookInTable(book, bookTable) {
+  const tbody = bookTable.querySelector('tbody');
+
+  // Clear existing table content
+  tbody.innerHTML = '';
+
+  // Get object keys for cell contents
+  const cellContent = Object.keys(book);
+
+  // Create table rows
+  const row = document.createElement('tr');
+  cellContent.forEach(item => {
+    const cell = document.createElement('td');
+    if (book == 'title') {
+      cell.classList.add('table-book-title');
+      cell.textContent = book[item];
+    } else if (book == 'author') {
+      cell.classList.add('table-book-author');
+      cell.textContent = book[item];
+    } else if (book == 'pages') {
+      cell.classList.add('table-book-pages');
+      cell.textContent = book[item];
+    } else if (book == 'status') {
+      cell.classList.add('button-status');
+      cell.textContent = book[item];
+    }
+    row.appendChild(cell);
+  })
+  const cell = document.createElement('td');
+  cell.classList.add('table-remove-book')
+  cell.textContent = 'Remove'
+  tbody.appendChild(row);
+}

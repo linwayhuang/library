@@ -38,26 +38,29 @@
             </div>
         </form>
         <table class="book-table">
-            <tr>
-                <th>Book Title</th>
-                <th>Author</th>
-                <th>Total Pages</th>
-                <th>Status</th>
-                <th>Remove</th>
-            </tr>
-            <tr>
-                <td class="table-book-tile">The 4 Hour Work Week</td>
-                <td class="table-bookAuthor">Timonthy Ferriss</td>
-                <td class="table-book-pages">396</td>
-                <td class="table-book-status">
-                    <!-- Notice the naming conventions of the id and class are different -->
-                    <button id="myButton" class="button-status">Read</button> 
-                </td>
-                <td class="table-remove-book">
-                    <button>Remove</button>
-                </td>
-            </tr>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>Total Pages</th>
+                    <th>Status</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="table-book-title">The 4 Hour Work Week</td>
+                    <td class="table-book-author">Timonthy Ferriss</td>
+                    <td class="table-book-pages">396</td>
+                    <td class="table-book-status">
+                        <!-- Notice the naming conventions of the id and class are different -->
+                        <button id="myButton" class="button-status">Read</button> 
+                    </td>
+                    <td class="table-remove-book">
+                        <button>Remove</button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>
