@@ -1,3 +1,14 @@
+const buttonStatus = document.querySelector('.button-status')
+
+buttonStatus.addEventListener('click', function() {
+  buttonStatus.classList.toggle('inactive');
+  if (buttonStatus.classList.contains('inactive')) {
+    buttonStatus.textContent = 'Not Read';
+  } else {
+    buttonStatus.textContent = 'Read';
+  }
+})
+
 const myLibrary = [];
 
 function Book(title, author, pages, read) {
@@ -26,3 +37,7 @@ function addBookToLibrary(title, author, pages, read) {
     book.id = crypto.randomUUID();
     myLibrary.push(book);
 }
+
+// function displayBookInTable {
+//   myLibrary.forEach
+// }

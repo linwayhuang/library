@@ -12,28 +12,32 @@
         <h1 class="header">My Library</h1>
         <p class="description">This is your library for the books on your reading list.</p>
         <form class="form" action="#" method="post">
-            <div>
-                <label for="book_title">Book</label>
-                <input type="text" id="book_title" name="book_title" placeholder="e.g. The 4 Hour Work Week">
+            <div class="user-input">
+                <div>
+                    <label for="book_title">Book</label>
+                    <input type="text" id="book_title" name="book_title" placeholder="The 4 Hour Work Week">
+                </div>
+                <div>
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author" placeholder="Tim Ferriss">
+                </div>
+                <div>
+                    <label for="pages">Total Pages</label>
+                    <input type="number" id="pages" name="total_pages" placeholder="396">
+                </div>
+                <div>
+                    <label for="status">Status</label>
+                    <select id="status" name="read_status">
+                        <option value="yes" selected>Read</option>
+                        <option value="no">Not Read</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                <label for="author">Author</label>
-                <input type="text" id="author" name="author" placeholder="e.g. Tim Ferriss">
+            <div class="form-button">
+                <button>Add Book</button>
             </div>
-            <div>
-                <label for="pages">Total Pages</label>
-                <input type="number" id="pages" name="total_pages" placeholder="e.g. 396">
-            </div>
-            <div>
-                <label for="status">Status</label>
-                <select id="status" name="read_status">
-                    <option value="yes" selected>Read</option>
-                    <option value="no">Not Read</option>
-                </select>
-            </div>
-            <button>Add Book</button>
         </form>
-        <table>
+        <table class="book-table">
             <tr>
                 <th>Book Title</th>
                 <th>Author</th>
@@ -42,10 +46,17 @@
                 <th>Remove</th>
             </tr>
             <tr>
-                <td>The 4 Hour Work Week</td>
-                <td>Timonthy Ferriss</td>
-                <td>396</td>
-                <td>Read</td>
+                <td class="table-book-tile">The 4 Hour Work Week</td>
+                <td class="table-bookAuthor">Timonthy Ferriss</td>
+                <td class="table-book-pages">396</td>
+                <td class="table-book-status">
+                    <!-- Notice the naming conventions of the id and class are different -->
+                    <button id="myButton" class="button-status">Read</button> 
+                </td>
+                <td class="table-remove-book">
+                    <button>Remove</button>
+                </td>
+            </tr>
             </tr>
         </table>
     </div>
