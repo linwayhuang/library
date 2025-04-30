@@ -1,15 +1,25 @@
-const buttonStatus = document.querySelector('.button-status')
+const buttonStatus = document.querySelectorAll('.button-status') /* Select multiple buttons */
 
-buttonStatus.addEventListener('click', function() {
-  buttonStatus.classList.toggle('inactive');
-  if (buttonStatus.classList.contains('inactive')) {
-    buttonStatus.textContent = 'Not Read';
-  } else {
-    buttonStatus.textContent = 'Read';
-  }
+buttonStatus.forEach(button => { /* Add event listener for multiple buttons */
+  button.addEventListener('click', function() {
+    button.classList.toggle('inactive');
+    if (button.classList.contains('inactive')) {
+      button.textContent = 'Not Read';
+    } else {
+      button.textContent = 'Read';
+    }
+  })
 })
 
+
 const myLibrary = [];
+
+const myBook = {
+  title: 'John Doe',
+  author: 'John Henry',
+  pages: 847,
+  status: 'yes',
+}
 
 function Book(title, author, pages, status) {
   // the constructor...
@@ -33,7 +43,7 @@ function Book(title, author, pages, status) {
 
 function addBookToLibrary(title, author, pages, read) {
   // take params, create a book then store it in the array
-    book = new Book(title, author, pages, read);
+    const book = new Book(title, author, pages, read);
     book.id = crypto.randomUUID();
     myLibrary.push(book);
 }
@@ -42,11 +52,11 @@ function displayBookInTable() {
 
 }
 
-function displayBookPropertiesInCell (book, bookTable) {
-  const tbody = bookTable.querySelector('tbody');
+function displayBookPropertiesInCell (book) {
+  const tbody = document.querySelector('tbody');
 
   // Clear existing table content
-  tbody.innerHTML = '';
+  // tbody.innerHTML = '';
 
   // Get object keys for cell contents
   const bookInfo = Object.keys(book);
@@ -55,16 +65,16 @@ function displayBookPropertiesInCell (book, bookTable) {
   const row = document.createElement('tr');
   bookInfo.forEach(item => { /* or 'for (let prop in book)' */
     const cell = document.createElement('td');
-    if (bookInfo == 'title') {
+    if (item == 'title') { /* item is the name for keys, not bookInfo */
       cell.classList.add('table-book-title');
       cell.textContent = book[item];
-    } else if (bookInfo == 'author') {
+    } else if (item == 'author') {
       cell.classList.add('table-book-author');
       cell.textContent = book[item];
-    } else if (bookInfo == 'pages') {
+    } else if (item == 'pages') {
       cell.classList.add('table-book-pages');
       cell.textContent = book[item];
-    } else if (bookInfo == 'status') {
+    } else if (item == 'status') {
       cell.classList.add('table-book-status');
       const buttonStatus = document.createElement('button');
       buttonStatus.id = 'myButton';
@@ -80,10 +90,14 @@ function displayBookPropertiesInCell (book, bookTable) {
     }
     row.appendChild(cell);
   })
+  // Create the buttonRemove
   const cell = document.createElement('td');
   cell.classList.add('table-remove-book');
   const buttonRemove = document.createElement('button');
   buttonRemove.textContent = 'Remove';
   cell.appendChild(buttonRemove);
+  row.appendChild(cell);
+
+  // Append all to the table
   tbody.appendChild(row);
 }
