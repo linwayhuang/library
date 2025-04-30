@@ -11,7 +11,7 @@ buttonStatus.addEventListener('click', function() {
 
 const myLibrary = [];
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, status) {
   // the constructor...
   if (!new.target) {
     throw Error("You must use the 'new' operator to call the constructor");
@@ -19,12 +19,12 @@ function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
-    if (this.read == 'yes') {
+    this.status = status;
+    if (this.status == 'yes') {
         this.info = function() {
             console.log('The ' + this.title + ' by ' + this.author + ', ' + this.pages + ' pages, already read.')
         }
-    } else if (this.read == 'no') {
+    } else if (this.status == 'no') {
         this.info = function() {
             console.log('The ' + this.title + ' by ' + this.author + ', ' + this.pages + ' pages, not read yet.')
         }
@@ -38,36 +38,52 @@ function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(book);
 }
 
-function displayBookInTable(book, bookTable) {
+function displayBookInTable() {
+
+}
+
+function displayBookPropertiesInCell (book, bookTable) {
   const tbody = bookTable.querySelector('tbody');
 
   // Clear existing table content
   tbody.innerHTML = '';
 
   // Get object keys for cell contents
-  const cellContent = Object.keys(book);
+  const bookInfo = Object.keys(book);
 
   // Create table rows
   const row = document.createElement('tr');
-  cellContent.forEach(item => {
+  bookInfo.forEach(item => { /* or 'for (let prop in book)' */
     const cell = document.createElement('td');
-    if (book == 'title') {
+    if (bookInfo == 'title') {
       cell.classList.add('table-book-title');
       cell.textContent = book[item];
-    } else if (book == 'author') {
+    } else if (bookInfo == 'author') {
       cell.classList.add('table-book-author');
       cell.textContent = book[item];
-    } else if (book == 'pages') {
+    } else if (bookInfo == 'pages') {
       cell.classList.add('table-book-pages');
       cell.textContent = book[item];
-    } else if (book == 'status') {
-      cell.classList.add('button-status');
-      cell.textContent = book[item];
+    } else if (bookInfo == 'status') {
+      cell.classList.add('table-book-status');
+      const buttonStatus = document.createElement('button');
+      buttonStatus.id = 'myButton';
+      buttonStatus.classList.add('button-status');
+      if (book[item] == 'yes') {
+        buttonStatus.textContent = 'Read';
+        cell.appendChild(buttonStatus);
+      } else if (book[item] == 'no') {
+        buttonStatus.classList.add('inactive');
+        buttonStatus.textContent = 'Not Read';
+        cell.appendChild(buttonStatus);
+      }
     }
     row.appendChild(cell);
   })
   const cell = document.createElement('td');
-  cell.classList.add('table-remove-book')
-  cell.textContent = 'Remove'
+  cell.classList.add('table-remove-book');
+  const buttonRemove = document.createElement('button');
+  buttonRemove.textContent = 'Remove';
+  cell.appendChild(buttonRemove);
   tbody.appendChild(row);
 }
