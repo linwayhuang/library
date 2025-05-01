@@ -9,6 +9,21 @@ const myBook = {
   status: 'yes',
 }
 
+const form = document.getElementById('myForm');
+form.addEventListener('submit', function(e) { // Use 'submit' as event listener
+
+  // Prevent default form submission behavior
+  e.preventDefault();
+
+  // Accessing form elements directly
+  const titleInput = document.getElementById('title');
+  const authorInput = document.getElementById('author');
+  const pagesInput = document.getElementById('pages');
+  const statusInput = document.getElementById('status');
+
+  addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, statusInput.value);
+});
+
 function Book(title, author, pages, status) {
   // the constructor...
   if (!new.target) {
