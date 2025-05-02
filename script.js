@@ -1,8 +1,8 @@
 const myLibrary = [
-  { title: 'The Star', author: 'John Henry', pages: 847, status: 'yes',}
+  { title: 'The Star', author: 'John Henry', pages: 847, status: 'yes', id: crypto.randomUUID()}
 ];
 
-const example = { title: 'The Sun', author: 'John Doe', pages: 1000, status: 'no',}
+const example = { title: 'The Sun', author: 'Jane Doe', pages: 1000, status: 'no',}
 
 const form = document.getElementById('myForm');
 
@@ -28,6 +28,8 @@ form.addEventListener('submit', function(e) { // Use 'submit' as event listener
   const statusInput = document.getElementById('status');
 
   addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, statusInput.value);
+
+  displayBookInTable(myLibrary);
 });
 
 // Functions
@@ -40,15 +42,15 @@ function Book(title, author, pages, status) {
   this.author = author;
   this.pages = pages;
   this.status = status;
-  if (this.status == 'yes') {
-    this.info = function() {
-      console.log('The ' + this.title + ' by ' + this.author + ', ' + this.pages + ' pages, already read.')
-    }
-  } else if (this.status == 'no') {
-    this.info = function() {
-      console.log('The ' + this.title + ' by ' + this.author + ', ' + this.pages + ' pages, not read yet.')
-    }
-  }
+  // if (this.status == 'yes') {
+  //   this.info = function() {
+  //     console.log('The ' + this.title + ' by ' + this.author + ', ' + this.pages + ' pages, already read.')
+  //   }
+  // } else if (this.status == 'no') {
+  //   this.info = function() {
+  //     console.log('The ' + this.title + ' by ' + this.author + ', ' + this.pages + ' pages, not read yet.')
+  //   }
+  // }
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -69,18 +71,22 @@ function displayBookPropertiesInCell(book) {
 
   // Create table rows
   const row = document.createElement('tr');
+  let cell; // Define cell like this so you can create 'td' for each property and be able to skip the 'id' property
   bookInfo.forEach(item => { /* or 'for (let prop in book)' */
-    const cell = document.createElement('td');
     if (item == 'title') { /* item is the name for keys, not bookInfo */
+      cell = document.createElement('td');
       cell.classList.add('table-book-title');
       cell.textContent = book[item];
     } else if (item == 'author') {
+      cell = document.createElement('td');
       cell.classList.add('table-book-author');
       cell.textContent = book[item];
     } else if (item == 'pages') {
+      cell = document.createElement('td');
       cell.classList.add('table-book-pages');
       cell.textContent = book[item];
     } else if (item == 'status') {
+      cell = document.createElement('td');
       cell.classList.add('table-book-status');
       const buttonStatus = document.createElement('button');
       buttonStatus.id = 'myButton';
@@ -98,7 +104,7 @@ function displayBookPropertiesInCell(book) {
   })
 
   // Create the buttonRemove
-  const cell = document.createElement('td');
+  cell = document.createElement('td');
   cell.classList.add('table-remove-book');
   const buttonRemove = document.createElement('button');
   buttonRemove.textContent = 'Remove';
@@ -109,7 +115,7 @@ function displayBookPropertiesInCell(book) {
   tbody.appendChild(row);
 }
 
-function displayBookInTable(library) {
+function displayBookInTable(library) { 
   const tbody = document.querySelector('tbody');
 
   // Clear existing table content
