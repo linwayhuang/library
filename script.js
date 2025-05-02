@@ -1,10 +1,14 @@
 const myLibrary = [
-  { title: 'The Star', author: 'John Henry', pages: 847, status: 'yes', id: crypto.randomUUID()}
+  { title: 'The 4 Hour Work Week', author: 'Timonthy Ferriss', pages: 396, status: 'yes', id: crypto.randomUUID()},
+  { title: 'The Star', author: 'John Henry', pages: 847, status: 'no', id: crypto.randomUUID()}
 ];
 
 const example = { title: 'The Sun', author: 'Jane Doe', pages: 1000, status: 'no',}
 
 const form = document.getElementById('myForm');
+
+// Run the displayBookInTable function first to add id to the available books
+displayBookInTable(myLibrary);
 
 addEListenerToStatusButton();
 
@@ -71,7 +75,8 @@ function displayBookPropertiesInCell(book) {
 
   // Create table rows
   const row = document.createElement('tr');
-  let cell; // Define cell like this so you can create 'td' for each property and be able to skip the 'id' property
+  let cell; // Define cell like this so you can redefine it to create 'td' for each property 
+  // and be able to skip the 'id' property in the object
   bookInfo.forEach(item => { /* or 'for (let prop in book)' */
     if (item == 'title') { /* item is the name for keys, not bookInfo */
       cell = document.createElement('td');
