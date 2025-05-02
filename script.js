@@ -1,21 +1,27 @@
-addEListenerToStatusButton();
+const myLibrary = [
+  { title: 'The Star', author: 'John Henry', pages: 847, status: 'yes',}
+];
 
-const myLibrary = [];
-
-const myBook = {
-  title: 'John Doe',
-  author: 'John Henry',
-  pages: 847,
-  status: 'yes',
-}
+const example = { title: 'The Sun', author: 'John Doe', pages: 1000, status: 'no',}
 
 const form = document.getElementById('myForm');
+
+addEListenerToStatusButton();
+
+// Add event listeners
 form.addEventListener('submit', function(e) { // Use 'submit' as event listener
 
   // Prevent default form submission behavior
   e.preventDefault();
 
-  // Accessing form elements directly
+  // Using FormData
+  const formData = new FormData(form);
+  for (const [name, value] of formData.entries()) {
+    console.log(`${name}: ${value}`);
+  }
+
+  // Accessing form elements directly. 
+  // 'title', 'author', 'pages', 'status' have to match with the form id
   const titleInput = document.getElementById('title');
   const authorInput = document.getElementById('author');
   const pagesInput = document.getElementById('pages');
@@ -24,6 +30,7 @@ form.addEventListener('submit', function(e) { // Use 'submit' as event listener
   addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, statusInput.value);
 });
 
+// Functions
 function Book(title, author, pages, status) {
   // the constructor...
   if (!new.target) {
@@ -49,31 +56,6 @@ function addBookToLibrary(title, author, pages, read) {
   const book = new Book(title, author, pages, read);
   book.id = crypto.randomUUID();
   myLibrary.push(book);
-}
-
-function addEListenerToStatusButton() {
-
-  // Delegate the event listener to the container of the buttons
-  // Event delegation doesn't work if you delegate to a class. Needs to be a container
-  const tbody = document.querySelector('tbody');
-
-  // Add event listener for multiple buttons by using event delegation
-  // This will automatically add event listener to dynamically created buttons
-    tbody.addEventListener('click', function(e) {
-      const event = e.target; // 'target' is the property of the dispatch element
-      if (event.matches('.button-status')) { //'matches' helps to access the class
-        event.classList.toggle('inactive'); // 'classList' helps to manipulate the element's classes
-        if (event.classList.contains('inactive')) {
-          event.textContent = 'Not Read';
-        } else {
-          event.textContent = 'Read';
-        }
-      }
-    })
-}
-
-function displayBookInTable() {
-
 }
 
 function displayBookPropertiesInCell(book) {
@@ -125,5 +107,36 @@ function displayBookPropertiesInCell(book) {
 
   // Append all elements to the table
   tbody.appendChild(row);
-  // addEListenerToStatusButton(); // Do this to add event listener every time a new button is created
+}
+
+function displayBookInTable(library) {
+  const tbody = document.querySelector('tbody');
+
+  // Clear existing table content
+  tbody.innerHTML = '';
+
+  library.forEach(item => {
+    displayBookPropertiesInCell(item);
+  })
+}
+
+function addEListenerToStatusButton() {
+
+  // Delegate the event listener to the container of the buttons
+  // Event delegation doesn't work if you delegate to a class. Needs to be a container
+  const tbody = document.querySelector('tbody');
+
+  // Add event listener for multiple buttons by using event delegation
+  // This will automatically add event listener to dynamically created buttons
+    tbody.addEventListener('click', function(e) {
+      const event = e.target; // 'target' is the property of the dispatch element
+      if (event.matches('.button-status')) { //'matches' helps to access the class
+        event.classList.toggle('inactive'); // 'classList' helps to manipulate the element's classes
+        if (event.classList.contains('inactive')) {
+          event.textContent = 'Not Read';
+        } else {
+          event.textContent = 'Read';
+        }
+      }
+    })
 }
