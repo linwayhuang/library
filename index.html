@@ -14,16 +14,16 @@
         <form id="myForm" action="#" method="post">
             <div class="user-input">
                 <div>
-                    <label for="book_title">Book</label>
-                    <input type="text" id="book_title" name="title" placeholder="The 4 Hour Work Week">
+                    <label for="title">Book</label>
+                    <input type="text" id="title" name="title" placeholder="The 4 Hour Work Week" pattern="^[a-zA-Z\s]*$" required>
                 </div>
                 <div>
                     <label for="author">Author</label>
-                    <input type="text" id="author" name="author" placeholder="Tim Ferriss">
+                    <input type="text" id="author" name="author" placeholder="Tim Ferriss" pattern="^[a-zA-Z\s]*$" required>
                 </div>
                 <div>
                     <label for="pages">Total Pages</label>
-                    <input type="number" id="pages" name="pages" placeholder="396">
+                    <input type="number" id="pages" name="pages" placeholder="396" required>
                 </div>
                 <div>
                     <label for="status">Status</label>
