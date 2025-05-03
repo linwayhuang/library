@@ -13,6 +13,8 @@ displayBookInTable(myLibrary);
 addEListenerToStatusButton();
 
 // Add event listeners
+
+// Event listener for the submit button
 form.addEventListener('submit', function(e) { // Use 'submit' as event listener
 
   // Prevent default form submission behavior
@@ -35,6 +37,8 @@ form.addEventListener('submit', function(e) { // Use 'submit' as event listener
 
   displayBookInTable(myLibrary);
 });
+
+// Event listener for the remove button
 
 // Functions
 function Book(title, author, pages, status) {
@@ -76,7 +80,7 @@ function displayBookPropertiesInCell(book) {
   // Create table rows
   const row = document.createElement('tr');
   let cell; // Define cell like this so you can redefine it to create 'td' for each property 
-  // and be able to skip the 'id' property in the object
+  // and be able to skip the 'id' (etc) property in the library array
   bookInfo.forEach(item => { /* or 'for (let prop in book)' */
     if (item == 'title') { /* item is the name for keys, not bookInfo */
       cell = document.createElement('td');
@@ -112,6 +116,7 @@ function displayBookPropertiesInCell(book) {
   cell = document.createElement('td');
   cell.classList.add('table-remove-book');
   const buttonRemove = document.createElement('button');
+  buttonRemove.setAttribute('data-unique-id', book.id); // Add the book's id as a data attribute to this button
   buttonRemove.textContent = 'Remove';
   cell.appendChild(buttonRemove);
   row.appendChild(cell);
