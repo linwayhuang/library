@@ -1,11 +1,14 @@
 const myLibrary = [
   { title: 'The 4 Hour Work Week', author: 'Timonthy Ferriss', pages: 396, status: 'yes', id: crypto.randomUUID()},
-  { title: 'The Star', author: 'John Henry', pages: 847, status: 'no', id: crypto.randomUUID()}
+  { title: 'The Star', author: 'John Henry', pages: 847, status: 'no', id: crypto.randomUUID()},
+  { title: 'The Sun', author: 'Jane Doe', pages: 1000, status: 'no',},
 ];
 
 const example = { title: 'The Sun', author: 'Jane Doe', pages: 1000, status: 'no',}
 
 const form = document.getElementById('myForm');
+const tbody = document.querySelector('tbody');
+// const buttonRemove = document.querySelectorAll('button-remove');
 
 // Run the displayBookInTable function first to add id to the available books
 displayBookInTable(myLibrary);
@@ -21,10 +24,10 @@ form.addEventListener('submit', function(e) { // Use 'submit' as event listener
   e.preventDefault();
 
   // Using FormData
-  const formData = new FormData(form);
-  for (const [name, value] of formData.entries()) {
-    console.log(`${name}: ${value}`);
-  }
+  // const formData = new FormData(form);
+  // for (const [name, value] of formData.entries()) {
+  //   console.log(`${name}: ${value}`);
+  // }
 
   // Accessing form elements directly. 
   // 'title', 'author', 'pages', 'status' have to match with the form id
@@ -39,6 +42,15 @@ form.addEventListener('submit', function(e) { // Use 'submit' as event listener
 });
 
 // Event listener for the remove button
+tbody.addEventListener('click', function(e) {
+  const event = e.target;
+  if (event.matches('.button-remove')) {
+    const bookID = event.getAttribute('data-unique-id');
+    const indexLibrary = myLibrary.findIndex(item => item.id == bookID); // Identify the book with the matching unique id by index
+    myLibrary.splice(indexLibrary, 1); // Modify the myLibrary array to remove the book
+    displayBookInTable(myLibrary);
+  }
+})
 
 // Functions
 function Book(title, author, pages, status) {
@@ -116,6 +128,7 @@ function displayBookPropertiesInCell(book) {
   cell = document.createElement('td');
   cell.classList.add('table-remove-book');
   const buttonRemove = document.createElement('button');
+  buttonRemove.classList.add('button-remove');
   buttonRemove.setAttribute('data-unique-id', book.id); // Add the book's id as a data attribute to this button
   buttonRemove.textContent = 'Remove';
   cell.appendChild(buttonRemove);
@@ -144,15 +157,15 @@ function addEListenerToStatusButton() {
 
   // Add event listener for multiple buttons by using event delegation
   // This will automatically add event listener to dynamically created buttons
-    tbody.addEventListener('click', function(e) {
-      const event = e.target; // 'target' is the property of the dispatch element
-      if (event.matches('.button-status')) { //'matches' helps to access the class
-        event.classList.toggle('inactive'); // 'classList' helps to manipulate the element's classes
-        if (event.classList.contains('inactive')) {
-          event.textContent = 'Not Read';
-        } else {
-          event.textContent = 'Read';
-        }
+  tbody.addEventListener('click', function(e) {
+    const event = e.target; // 'target' is the property of the dispatch element
+    if (event.matches('.button-status')) { //'matches' helps to access the class
+      event.classList.toggle('inactive'); // 'classList' helps to manipulate the element's classes
+      if (event.classList.contains('inactive')) {
+        event.textContent = 'Not Read';
+      } else {
+        event.textContent = 'Read';
       }
-    })
+    }
+  })
 }
