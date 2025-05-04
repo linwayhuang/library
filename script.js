@@ -4,16 +4,13 @@ const myLibrary = [
   { title: 'The Sun', author: 'Jane Doe', pages: 1000, status: 'no',},
 ];
 
-const example = { title: 'The Sun', author: 'Jane Doe', pages: 1000, status: 'no',}
-
 const form = document.getElementById('myForm');
+// Delegate the event listener to the container of the buttons
+// Event delegation doesn't work if you delegate to a class. Needs to be a container
 const tbody = document.querySelector('tbody');
-// const buttonRemove = document.querySelectorAll('button-remove');
 
 // Run the displayBookInTable function first to add id to the available books
 displayBookInTable(myLibrary);
-
-addEListenerToStatusButton();
 
 // Add event listeners
 
@@ -40,6 +37,21 @@ form.addEventListener('submit', function(e) { // Use 'submit' as event listener
 
   displayBookInTable(myLibrary);
 });
+
+// Event listener for the status button
+// Add event listener for multiple buttons by using event delegation
+// This will automatically add event listener to dynamically created buttons
+tbody.addEventListener('click', function(e) {
+  const event = e.target; // 'target' is the property of the dispatch element
+  if (event.matches('.button-status')) { //'matches' helps to access the class
+    event.classList.toggle('inactive'); // 'classList' helps to manipulate the element's classes
+    if (event.classList.contains('inactive')) {
+      event.textContent = 'Not Read';
+    } else {
+      event.textContent = 'Read';
+    }
+  }
+})
 
 // Event listener for the remove button
 tbody.addEventListener('click', function(e) {
@@ -146,26 +158,5 @@ function displayBookInTable(library) {
 
   library.forEach(item => {
     displayBookPropertiesInCell(item);
-  })
-}
-
-function addEListenerToStatusButton() {
-
-  // Delegate the event listener to the container of the buttons
-  // Event delegation doesn't work if you delegate to a class. Needs to be a container
-  const tbody = document.querySelector('tbody');
-
-  // Add event listener for multiple buttons by using event delegation
-  // This will automatically add event listener to dynamically created buttons
-  tbody.addEventListener('click', function(e) {
-    const event = e.target; // 'target' is the property of the dispatch element
-    if (event.matches('.button-status')) { //'matches' helps to access the class
-      event.classList.toggle('inactive'); // 'classList' helps to manipulate the element's classes
-      if (event.classList.contains('inactive')) {
-        event.textContent = 'Not Read';
-      } else {
-        event.textContent = 'Read';
-      }
-    }
   })
 }
