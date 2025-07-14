@@ -20,12 +20,6 @@ form.addEventListener('submit', function(e) { // Use 'submit' as event listener
   // Prevent default form submission behavior
   e.preventDefault();
 
-  // Using FormData
-  // const formData = new FormData(form);
-  // for (const [name, value] of formData.entries()) {
-  //   console.log(`${name}: ${value}`);
-  // }
-
   // Accessing form elements directly. 
   // 'title', 'author', 'pages', 'status' have to match with the form id
   const titleInput = document.getElementById('title');
@@ -65,24 +59,13 @@ tbody.addEventListener('click', function(e) {
 })
 
 // Functions
-function Book(title, author, pages, status) {
-  // the constructor...
-  if (!new.target) {
-    throw Error("You must use the 'new' operator to call the constructor");
+let Book = class MyLibrary {
+  constructor(title, author, pages, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
   }
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.status = status;
-  // if (this.status == 'yes') {
-  //   this.info = function() {
-  //     console.log('The ' + this.title + ' by ' + this.author + ', ' + this.pages + ' pages, already read.')
-  //   }
-  // } else if (this.status == 'no') {
-  //   this.info = function() {
-  //     console.log('The ' + this.title + ' by ' + this.author + ', ' + this.pages + ' pages, not read yet.')
-  //   }
-  // }
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -94,9 +77,6 @@ function addBookToLibrary(title, author, pages, read) {
 
 function displayBookPropertiesInCell(book) {
   const tbody = document.querySelector('tbody');
-
-  // Clear existing table content
-  // tbody.innerHTML = '';
 
   // Get object keys for cell contents
   const bookInfo = Object.keys(book);
