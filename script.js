@@ -26,10 +26,37 @@ form.addEventListener('submit', function(e) { // Use 'submit' as event listener
   const authorInput = document.getElementById('author');
   const pagesInput = document.getElementById('pages');
   const statusInput = document.getElementById('status');
+  const formError = document.getElementById('form-error');
 
-  addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, statusInput.value);
+  const inputs = [titleInput, authorInput, pagesInput];
+  let allValid = true;
 
-  displayBookInTable(myLibrary);
+  inputs.forEach(input => {
+    if (!input.checkValidity()) {
+      allValid = false;
+      if (input.validity.valueMissing) {
+        input.setCustomValidity(`${input.name} is required.`);
+      } else if (input.validity.rangeUnderflow) {
+        input.setCustomValidity(`${input.name} must be at least 1.`);
+      } else {
+        input.setCustomValidity("");
+      }
+      input.reportValidity();
+    } else {
+      input.setCustomValidity("");
+    }
+  });
+
+  if (allValid) {
+    addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, statusInput.value || 'no');
+    displayBookInTable(myLibrary);
+    form.reset();
+    formError.textContent = "";
+  } else {
+    formError.textContent = "Please fill all required fields correctly.";
+    formError.classList.add("active");
+  }
+
 });
 
 // Event listener for the status button

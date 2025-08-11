@@ -11,7 +11,9 @@
     <div class="container">
         <h1 class="header">My Library</h1>
         <p class="description">This is your library for the books on your reading list.</p>
-        <form id="myForm" action="#" method="post">
+
+        <!-- Add "novalidate" -->
+        <form id="myForm" action="#" method="post" novalidate>
             <div class="user-input">
                 <div>
                     <label for="title">Book</label>
@@ -23,7 +25,7 @@
                 </div>
                 <div>
                     <label for="pages">Total Pages</label>
-                    <input type="number" id="pages" name="pages" placeholder="396" required>
+                    <input type="number" id="pages" name="pages" placeholder="396" min="1" required>
                 </div>
                 <div>
                     <label for="status">Status</label>
@@ -36,6 +38,9 @@
             <div class="form-button">
                 <button type="submit">Add Book to Library</button>
             </div>
+
+            <!-- Add div for submission error -->
+            <div id="form-error" class="error"></div>
         </form>
         <table class="book-table">
             <thead>
